@@ -9,7 +9,7 @@ const items = [
 
 export default function TaglineBar() {
   return (
-    <div className="tagline-bar">
+    <div className="tagline-bar" aria-hidden="true">
       <div className="tagline-track">
         {items.map((item, i) => (
           <span key={i}>{item}</span>

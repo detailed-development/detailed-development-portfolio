@@ -16,6 +16,8 @@
   --card-raised: #1a1a1a;
   --border: #222222;
   --border-light: #2e2e2e;
+  --accent-bg: color-mix(in srgb, var(--accent) 10%, transparent);
+  --bg-translucent: color-mix(in srgb, var(--bg) 80%, transparent);
 }
 
 html {
@@ -67,7 +69,7 @@ img {
 
 .btn-primary {
   background: var(--accent);
-  color: var(--text);
+  color: var(--bg);
 }
 
 .btn-primary:hover {

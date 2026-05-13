@@ -56,6 +56,7 @@ export default function Projects() {
                   href={p.link}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={`View ${p.title} on GitHub`}
                 >
                   View on GitHub &rarr;
                 </a>

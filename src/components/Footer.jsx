@@ -9,7 +9,7 @@ export default function Footer() {
           <span>Detailed Development LLC</span>
         </div>
         <div className="footer-right">
-          &copy; 2026 Detailed Development LLC. Phoenix, AZ.
+          &copy; {new Date().getFullYear()} Detailed Development LLC. Phoenix, AZ.
         </div>
       </div>
     </footer>
