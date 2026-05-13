@@ -3,37 +3,37 @@ const services = [
     number: '01',
     title: 'Web App Development',
     description:
-      'Full-stack web applications built with React, Node.js, and modern frameworks. From SaaS platforms to internal tools, we deliver production-ready software.',
+      'The bread and butter. React, Node, full-stack — we build tools people actually want to use. Not templates with your logo slapped on.',
   },
   {
     number: '02',
     title: 'WordPress Plugin Development',
     description:
-      'Custom WordPress plugins that extend functionality without bloat. Clean code, proper hooks, and seamless integration with existing themes and plugins.',
+      'Need WordPress to do something it doesn\'t? We write clean plugins that play nice with your existing setup. No page-builder spaghetti.',
   },
   {
     number: '03',
     title: 'iOS App Development',
     description:
-      'Native iOS applications built with Swift and SwiftUI. Polished user experiences with performance and reliability at the core.',
+      'Native Swift and SwiftUI. We care about the little interactions — the scroll feel, the transitions, the stuff users notice but can\'t explain.',
   },
   {
     number: '04',
-    title: 'Maps & Location Services',
+    title: 'Maps & Location',
     description:
-      'Interactive mapping solutions, store locators, geofencing, and location-aware features powered by modern mapping APIs.',
+      'Store locators, geofencing, interactive maps — we\'ve spent a lot of time making pins land in the right spot. It\'s weirdly satisfying work.',
   },
   {
     number: '05',
     title: 'Dashboards & Internal Tools',
     description:
-      'Custom dashboards and internal tools that streamline operations. Real-time data, intuitive interfaces, and secure access controls.',
+      'Your team deserves better than a shared spreadsheet. We build internal tools that actually get used instead of worked around.',
   },
   {
     number: '06',
     title: 'Prototyping & MVPs',
     description:
-      'Rapid prototyping to validate ideas fast. We turn concepts into working software so you can test, iterate, and launch with confidence.',
+      'Got an idea? Let\'s build the smallest version that proves whether it works. Fast enough to learn from, solid enough to ship if it hits.',
   },
 ]
 
@@ -45,7 +45,7 @@ export default function Services() {
           <span className="section-eyebrow">What We Do</span>
           <h2 className="section-title">Services</h2>
           <p className="section-sub">
-            End-to-end development for teams that need it done right.
+            We keep the scope tight and the quality high. Here's where we tend to do our best work.
           </p>
         </div>
         <div className="services-grid">

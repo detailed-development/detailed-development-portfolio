@@ -20,11 +20,11 @@ export default function About() {
           <span className="section-eyebrow">Who We Are</span>
           <h2 className="section-title">About</h2>
           <p className="about-copy">
-            Detailed Development LLC is a Phoenix-based software studio focused on
-            building high-quality, custom software. We work with startups, agencies,
-            and established businesses to ship products that are reliable, performant,
-            and built to last. Every line of code is intentional — no templates, no
-            shortcuts.
+            We're a Phoenix-based studio that actually likes writing code. No project
+            managers playing telephone, no offshore handoffs at 5pm — just developers
+            who care about getting the details right. We work with startups, agencies,
+            and businesses who've been burned by "it's almost done" one too many times.
+            Every project gets our full attention, start to finish.
           </p>
           <div className="about-stats">
             {stats.map((s) => (
@@ -36,7 +36,7 @@ export default function About() {
           </div>
         </div>
         <div className="about-right">
-          <h3>Tech Stack</h3>
+          <h3>Our Toolkit</h3>
           <div className="tech-tags">
             {techStack.map((tech) => (
               <span className="tech-tag" key={tech}>{tech}</span>
