@@ -24,10 +24,28 @@ function ScrollManager() {
   return null
 }
 
+// Feeds cursor position to .card-spot elements so their glow follows the mouse.
+function SpotlightManager() {
+  useEffect(() => {
+    const onMove = (e) => {
+      const card = e.target.closest?.('.card-spot')
+      if (!card) return
+      const rect = card.getBoundingClientRect()
+      card.style.setProperty('--mx', `${e.clientX - rect.left}px`)
+      card.style.setProperty('--my', `${e.clientY - rect.top}px`)
+    }
+    window.addEventListener('pointermove', onMove, { passive: true })
+    return () => window.removeEventListener('pointermove', onMove)
+  }, [])
+
+  return null
+}
+
 export default function App() {
   return (
     <BrowserRouter>
       <ScrollManager />
+      <SpotlightManager />
       <Header />
       <main>
         <Routes>

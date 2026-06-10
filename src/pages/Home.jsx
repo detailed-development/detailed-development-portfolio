@@ -5,8 +5,11 @@ import Services from '../components/Services'
 import Process from '../components/Process'
 import About from '../components/About'
 import Contact from '../components/Contact'
+import useReveal from '../hooks/useReveal'
 
 export default function Home() {
+  useReveal()
+
   return (
     <>
       <Hero />

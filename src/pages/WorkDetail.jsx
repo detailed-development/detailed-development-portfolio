@@ -1,9 +1,12 @@
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { clientWork, findClientWork } from '../data/work'
+import useReveal from '../hooks/useReveal'
 
 export default function WorkDetail() {
   const { slug } = useParams()
   const project = findClientWork(slug)
+
+  useReveal()
 
   if (!project) {
     return <Navigate to="/" replace />
@@ -18,7 +21,7 @@ export default function WorkDetail() {
       <div className="container">
         <Link to="/#work" className="work-detail-back">&larr; All Work</Link>
 
-        <div className="work-detail-hero">
+        <div className="work-detail-hero" data-reveal>
           <span className="work-industry">{project.industry}</span>
           <h1 className="section-title">{project.name}</h1>
           <p className="section-sub">{project.summary}</p>
@@ -29,16 +32,17 @@ export default function WorkDetail() {
           </div>
         </div>
 
-        <div className="work-placeholder work-placeholder-lg" aria-hidden="true">
+        <div className="work-placeholder work-placeholder-lg" data-reveal aria-hidden="true">
+          <span className="work-placeholder-letter">{project.name.charAt(0)}</span>
           <span>{project.name} — Screenshot</span>
         </div>
 
         <div className="work-detail-grid">
-          <div>
+          <div data-reveal>
             <h2>What we built</h2>
             <p className="work-detail-copy">{project.description}</p>
           </div>
-          <div>
+          <div data-reveal style={{ '--rd': '120ms' }}>
             <h2>Highlights</h2>
             <ul className="work-bullets">
               {project.bullets.map((b) => (
@@ -58,7 +62,7 @@ export default function WorkDetail() {
           </div>
         </div>
 
-        <div className="work-detail-cta">
+        <div className="work-detail-cta card-spot" data-reveal>
           <p>Need a website like this?</p>
           <Link to="/#contact" className="btn btn-primary">Let's Talk</Link>
         </div>

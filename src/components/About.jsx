@@ -15,7 +15,7 @@ export default function About() {
   return (
     <section className="about" id="about">
       <div className="container about-grid">
-        <div className="about-left">
+        <div className="about-left" data-reveal>
           <span className="section-eyebrow">Who We Are</span>
           <h2 className="section-title">About</h2>
           <p className="about-copy">
@@ -26,15 +26,20 @@ export default function About() {
             Every project gets our full attention, start to finish.
           </p>
           <div className="about-stats">
-            {stats.map((s) => (
-              <div className="stat" key={s.label}>
+            {stats.map((s, i) => (
+              <div
+                className="stat card-spot"
+                data-reveal
+                style={{ '--rd': `${(i % 2) * 90}ms` }}
+                key={s.label}
+              >
                 <div className="stat-value">{s.value}</div>
                 <div className="stat-label">{s.label}</div>
               </div>
             ))}
           </div>
         </div>
-        <div className="about-right">
+        <div className="about-right" data-reveal style={{ '--rd': '120ms' }}>
           <h3>Our Toolkit</h3>
           <div className="tech-tags">
             {techStack.map((tech) => (

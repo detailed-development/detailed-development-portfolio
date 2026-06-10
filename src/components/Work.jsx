@@ -1,10 +1,17 @@
 import { Link } from 'react-router-dom'
 import { clientWork, products } from '../data/work'
 
-function ClientCard({ project }) {
+function ClientCard({ project, index }) {
   return (
-    <Link to={`/work/${project.slug}`} className="work-card" aria-label={`View ${project.name}`}>
+    <Link
+      to={`/work/${project.slug}`}
+      className="work-card card-spot"
+      data-reveal
+      style={{ '--rd': `${(index % 3) * 90}ms` }}
+      aria-label={`View ${project.name}`}
+    >
       <div className="work-placeholder" aria-hidden="true">
+        <span className="work-placeholder-letter">{project.name.charAt(0)}</span>
         <span>{project.name}</span>
       </div>
       <div className="work-card-body">
@@ -27,7 +34,7 @@ function ClientCard({ project }) {
   )
 }
 
-function ProductCard({ project }) {
+function ProductCard({ project, index }) {
   const body = (
     <>
       <span className="work-industry">{project.industry}</span>
@@ -46,27 +53,33 @@ function ProductCard({ project }) {
     </>
   )
 
+  const revealProps = {
+    'data-reveal': true,
+    style: { '--rd': `${(index % 2) * 90}ms` },
+  }
+
   if (project.link) {
     return (
       <a
-        className="project-card"
+        className="project-card card-spot"
         href={project.link}
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`View ${project.name} on GitHub`}
+        {...revealProps}
       >
         {body}
       </a>
     )
   }
-  return <div className="project-card">{body}</div>
+  return <div className="project-card card-spot" {...revealProps}>{body}</div>
 }
 
 export default function Work() {
   return (
     <section className="work" id="work">
       <div className="container">
-        <div className="work-header">
+        <div className="work-header" data-reveal>
           <span className="section-eyebrow">Our Work</span>
           <h2 className="section-title">Work</h2>
           <p className="section-sub">
@@ -74,17 +87,17 @@ export default function Work() {
           </p>
         </div>
 
-        <h3 className="work-group-label">Client Websites</h3>
+        <h3 className="work-group-label" data-reveal>Client Websites</h3>
         <div className="work-grid">
-          {clientWork.map((p) => (
-            <ClientCard project={p} key={p.slug} />
+          {clientWork.map((p, i) => (
+            <ClientCard project={p} index={i} key={p.slug} />
           ))}
         </div>
 
-        <h3 className="work-group-label">Products &amp; Internal Tools</h3>
+        <h3 className="work-group-label" data-reveal>Products &amp; Internal Tools</h3>
         <div className="projects-grid">
-          {products.map((p) => (
-            <ProductCard project={p} key={p.slug} />
+          {products.map((p, i) => (
+            <ProductCard project={p} index={i} key={p.slug} />
           ))}
         </div>
       </div>

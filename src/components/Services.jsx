@@ -41,7 +41,7 @@ export default function Services() {
   return (
     <section className="services" id="services">
       <div className="container">
-        <div className="services-header">
+        <div className="services-header" data-reveal>
           <span className="section-eyebrow">What We Do</span>
           <h2 className="section-title">Services</h2>
           <p className="section-sub">
@@ -49,8 +49,13 @@ export default function Services() {
           </p>
         </div>
         <div className="services-grid">
-          {services.map((s) => (
-            <div className="service-card" key={s.number}>
+          {services.map((s, i) => (
+            <div
+              className="service-card card-spot"
+              data-reveal
+              style={{ '--rd': `${(i % 3) * 90}ms` }}
+              key={s.number}
+            >
               <div className="service-number">{s.number}</div>
               <h3>{s.title}</h3>
               <p>{s.description}</p>

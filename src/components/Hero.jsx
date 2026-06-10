@@ -1,12 +1,60 @@
-import LogoSvg from './LogoSvg'
+const terminalLines = [
+  { cmd: 'whoami' },
+  { out: 'small studio. big attention to detail.' },
+  { cmd: 'ls services/' },
+  { out: 'web-apps/  wordpress-plugins/  ios/  integrations/' },
+  { cmd: 'git commit -m "ship it right the first time"' },
+  { out: 'main-4e8d2c1', commit: true },
+  { cmd: '', cursor: true },
+]
+
+function Terminal() {
+  return (
+    <div className="terminal" aria-hidden="true">
+      <div className="terminal-bar">
+        <span className="terminal-dot red" />
+        <span className="terminal-dot yellow" />
+        <span className="terminal-dot green" />
+        <span className="terminal-title">detailed-dev — zsh</span>
+      </div>
+      <div className="terminal-body">
+        {terminalLines.map((line, i) => (
+          <p className="terminal-line" style={{ '--line': i }} key={i}>
+            {'cmd' in line ? (
+              <>
+                <span className="t-prompt">$</span>
+                {line.cmd}
+                {line.cursor && <span className="t-cursor" />}
+              </>
+            ) : line.commit ? (
+              <span className="t-out">
+                <span className="t-green">[main 4e8d2c1]</span> ship it right the first time
+              </span>
+            ) : (
+              <span className="t-out">{line.out}</span>
+            )}
+          </p>
+        ))}
+      </div>
+    </div>
+  )
+}
 
 export default function Hero() {
   return (
     <section className="hero">
+      <div className="hero-blob hero-blob-a" aria-hidden="true" />
+      <div className="hero-blob hero-blob-b" aria-hidden="true" />
       <div className="container hero-grid">
         <div className="hero-content">
-          <span className="section-eyebrow">Software Studio — Phoenix, AZ</span>
-          <h1>Detailed Development LLC</h1>
+          <span className="hero-badge">
+            <span className="badge-dot" aria-hidden="true" />
+            Software Studio — Phoenix, AZ
+          </span>
+          <h1>
+            Detailed <span className="h1-accent">Development</span>{' '}
+            <span className="h1-llc">LLC</span>
+          </h1>
           <p className="hero-tagline">
             We're a small team that builds software the right way — no bloat, no
             shortcuts, no handing you off to a junior dev halfway through. Web apps,
@@ -14,15 +62,20 @@ export default function Hero() {
             done it.
           </p>
           <div className="hero-actions">
-            <a href="#work" className="btn btn-primary">See What We've Built</a>
+            <a href="#work" className="btn btn-primary">
+              See What We've Built <span className="btn-arrow">&rarr;</span>
+            </a>
             <a href="#contact" className="btn btn-ghost">Say Hello</a>
           </div>
         </div>
         <div className="hero-visual">
-          <div className="hero-glow" />
-          <LogoSvg />
+          <Terminal />
         </div>
       </div>
+      <a className="hero-scroll" href="#work" aria-label="Scroll to our work">
+        scroll
+        <span aria-hidden="true" />
+      </a>
     </section>
   )
 }
