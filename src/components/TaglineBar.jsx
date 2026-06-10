@@ -1,10 +1,10 @@
 const items = [
-  'Web Applications',
+  'Client Websites',
   'WordPress Plugins',
+  'Web Applications',
   'iOS Development',
+  'Events & Calendars',
   'Maps & Location',
-  'Internal Dashboards',
-  'Rapid Prototyping',
 ]
 
 export default function TaglineBar() {

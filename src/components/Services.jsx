@@ -1,9 +1,9 @@
 const services = [
   {
     number: '01',
-    title: 'Web App Development',
+    title: 'Client Websites',
     description:
-      'The bread and butter. React, Node, full-stack — we build tools people actually want to use. Not templates with your logo slapped on.',
+      'WordPress, Astra, and Elementor builds for nonprofits, churches, and brands. Organized around what visitors actually come to do — not your org chart.',
   },
   {
     number: '02',
@@ -13,27 +13,27 @@ const services = [
   },
   {
     number: '03',
+    title: 'Web App Development',
+    description:
+      'The bread and butter. React, Node, full-stack — we build tools people actually want to use. Not templates with your logo slapped on.',
+  },
+  {
+    number: '04',
     title: 'iOS App Development',
     description:
       'Native Swift and SwiftUI. We care about the little interactions — the scroll feel, the transitions, the stuff users notice but can\'t explain.',
   },
   {
-    number: '04',
-    title: 'Maps & Location',
-    description:
-      'Store locators, geofencing, interactive maps — we\'ve spent a lot of time making pins land in the right spot. It\'s weirdly satisfying work.',
-  },
-  {
     number: '05',
-    title: 'Dashboards & Internal Tools',
+    title: 'Maps, Events & Integrations',
     description:
-      'Your team deserves better than a shared spreadsheet. We build internal tools that actually get used instead of worked around.',
+      'Store locators, event calendars, donation flows, media embeds — the connective tissue that makes a site actually do things.',
   },
   {
     number: '06',
-    title: 'Prototyping & MVPs',
+    title: 'Performance, SEO & Maintenance',
     description:
-      'Got an idea? Let\'s build the smallest version that proves whether it works. Fast enough to learn from, solid enough to ship if it hits.',
+      'Fast pages, clean markup, analytics that tell you something. And when you need a change six months later, we\'re still here.',
   },
 ]
 

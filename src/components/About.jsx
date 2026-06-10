@@ -1,15 +1,14 @@
 const stats = [
-  { value: '4+', label: 'Projects' },
-  { value: '3+', label: 'Platforms' },
-  { value: '100%', label: 'Custom' },
-  { value: 'PHX', label: 'Based' },
+  { value: '7+', label: 'Projects Shipped' },
+  { value: '3', label: 'Industries Served' },
+  { value: '100%', label: 'Custom Builds' },
+  { value: 'PHX', label: 'Arizona Based' },
 ]
 
 const techStack = [
-  'React', 'Node.js', 'Swift', 'WordPress', 'PHP',
-  'Prisma', 'PostgreSQL', 'TypeScript', 'Next.js',
-  'Tailwind CSS', 'MapKit', 'Google Maps', 'REST APIs',
-  'Vite', 'SwiftUI', 'WooCommerce',
+  'WordPress', 'Elementor', 'Astra', 'PHP', 'JavaScript',
+  'React', 'Node.js', 'Swift', 'SwiftUI', 'Google Maps',
+  'MySQL', 'PostgreSQL', 'REST APIs', 'Vite', 'Git', 'SEO / GA4',
 ]
 
 export default function About() {

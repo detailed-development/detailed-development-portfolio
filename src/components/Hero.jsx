@@ -14,7 +14,7 @@ export default function Hero() {
             done it.
           </p>
           <div className="hero-actions">
-            <a href="#projects" className="btn btn-primary">See What We've Built</a>
+            <a href="#work" className="btn btn-primary">See What We've Built</a>
             <a href="#contact" className="btn btn-ghost">Say Hello</a>
           </div>
         </div>

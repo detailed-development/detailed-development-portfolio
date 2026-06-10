@@ -1,18 +1,19 @@
+import { Link } from 'react-router-dom'
 import LogoSvg from './LogoSvg'
 
 export default function Header() {
   return (
     <header className="header">
       <div className="container header-inner">
-        <a href="/" className="header-logo" aria-label="Home">
+        <Link to="/" className="header-logo" aria-label="Home">
           <LogoSvg />
           <span className="header-wordmark">Detailed Development</span>
-        </a>
+        </Link>
         <nav className="header-nav" aria-label="Main navigation">
-          <a href="#services">Services</a>
-          <a href="#about">About</a>
-          <a href="#projects">Projects</a>
-          <a href="#contact" className="btn btn-primary header-cta">Get in Touch</a>
+          <Link to="/#work">Work</Link>
+          <Link to="/#services">Services</Link>
+          <Link to="/#about">About</Link>
+          <Link to="/#contact" className="btn btn-primary header-cta">Start a Project</Link>
         </nav>
       </div>
     </header>

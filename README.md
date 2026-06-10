@@ -1,16 +1,32 @@
-# React + Vite
+# Detailed Development LLC — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Studio portfolio site for Detailed Development LLC, a Phoenix, AZ software studio.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Vite + React 19
+- React Router (home is a full single-page experience; `/work/:slug` and `/privacy` are supplementary routes)
+- Plain CSS with custom properties — no UI libraries
 
-## React Compiler
+## Development
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+This project uses **pnpm** (not npm):
 
-## Expanding the ESLint configuration
+```bash
+pnpm install
+pnpm dev
+pnpm build
+pnpm preview
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Deploying
+
+Static SPA — deploy `dist/` to Vercel, Netlify, or Cloudflare Pages. All three handle the SPA history fallback automatically. For other hosts, rewrite all routes to `/index.html`.
+
+## Structure
+
+- `src/data/work.js` — all portfolio entries (client sites + products). Edit here to add projects.
+- `src/pages/` — Home (full SPA), WorkDetail, Privacy
+- `src/components/` — section components composed by Home
+
+Screenshots are currently placeholder blocks — swap them by replacing `.work-placeholder` divs with `<img>` tags once real captures are added.
