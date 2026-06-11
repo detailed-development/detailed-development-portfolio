@@ -912,6 +912,21 @@
   margin: 48px 0;
 }
 
+/* Real project photo (from the CMS featured image) fills the frame. */
+.work-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.work-card:hover .work-photo {
+  transform: scale(1.04);
+}
+
 .work-card-body {
   display: flex;
   flex-direction: column;

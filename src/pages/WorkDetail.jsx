@@ -1,14 +1,28 @@
 import { useParams, Link, Navigate } from 'react-router-dom'
-import { clientWork, findClientWork } from '../data/work'
+import useProjects from '../hooks/useProjects'
+import { WorkThumb } from '../components/Work'
 import useReveal from '../hooks/useReveal'
 
 export default function WorkDetail() {
   const { slug } = useParams()
-  const project = findClientWork(slug)
+  const { clientWork, loading } = useProjects()
 
   useReveal()
 
+  const project = clientWork.find((p) => p.slug === slug)
+
+  // Wait for data before deciding a slug is missing, so a direct link or
+  // refresh doesn't bounce to home before the CMS responds.
   if (!project) {
+    if (loading) {
+      return (
+        <section className="work-detail">
+          <div className="container">
+            <p className="section-sub" aria-live="polite">Loading…</p>
+          </div>
+        </section>
+      )
+    }
     return <Navigate to="/" replace />
   }
 
@@ -32,9 +46,8 @@ export default function WorkDetail() {
           </div>
         </div>
 
-        <div className="work-placeholder work-placeholder-lg" data-reveal aria-hidden="true">
-          <span className="work-placeholder-letter">{project.name.charAt(0)}</span>
-          <span>{project.name} — Screenshot</span>
+        <div data-reveal>
+          <WorkThumb project={project} large />
         </div>
 
         <div className="work-detail-grid">
@@ -67,10 +80,12 @@ export default function WorkDetail() {
           <Link to="/#contact" className="btn btn-primary">Let's Talk</Link>
         </div>
 
-        <nav className="work-detail-nav" aria-label="More projects">
-          <Link to={`/work/${prev.slug}`}>&larr; {prev.name}</Link>
-          <Link to={`/work/${next.slug}`}>{next.name} &rarr;</Link>
-        </nav>
+        {prev && next && (
+          <nav className="work-detail-nav" aria-label="More projects">
+            <Link to={`/work/${prev.slug}`}>&larr; {prev.name}</Link>
+            <Link to={`/work/${next.slug}`}>{next.name} &rarr;</Link>
+          </nav>
+        )}
       </div>
     </section>
   )

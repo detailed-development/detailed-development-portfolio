@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
 
 // Adds .is-visible to [data-reveal] elements as they enter the viewport.
+// Also watches for [data-reveal] elements added later (e.g. async CMS content)
+// so they still animate in.
 export default function useReveal() {
   useEffect(() => {
-    const els = document.querySelectorAll('[data-reveal]')
-
     if (!('IntersectionObserver' in window)) {
-      els.forEach((el) => el.classList.add('is-visible'))
+      document.querySelectorAll('[data-reveal]').forEach((el) => el.classList.add('is-visible'))
       return undefined
     }
 
@@ -22,7 +22,26 @@ export default function useReveal() {
       { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
     )
 
-    els.forEach((el) => io.observe(el))
-    return () => io.disconnect()
+    const observe = (root) => {
+      if (root.matches?.('[data-reveal]')) io.observe(root)
+      root.querySelectorAll?.('[data-reveal]').forEach((el) => io.observe(el))
+    }
+
+    observe(document.body)
+
+    // Catch [data-reveal] nodes mounted after this hook runs (async data, route swaps).
+    const mo = new MutationObserver((mutations) => {
+      mutations.forEach((m) => {
+        m.addedNodes.forEach((node) => {
+          if (node.nodeType === 1) observe(node)
+        })
+      })
+    })
+    mo.observe(document.body, { childList: true, subtree: true })
+
+    return () => {
+      io.disconnect()
+      mo.disconnect()
+    }
   }, [])
 }
