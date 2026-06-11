@@ -1,5 +1,30 @@
 import { Link } from 'react-router-dom'
-import { clientWork, products } from '../data/work'
+import useProjects from '../hooks/useProjects'
+
+// Project photo from the CMS, with a graceful letter-tile fallback when there's none.
+function WorkThumb({ project, large = false }) {
+  const cls = large ? 'work-placeholder work-placeholder-lg' : 'work-placeholder'
+  if (project.image?.url) {
+    return (
+      <div className={cls}>
+        <img
+          className="work-photo"
+          src={project.image.url}
+          alt={project.image.alt || `${project.name} screenshot`}
+          loading="lazy"
+        />
+      </div>
+    )
+  }
+  return (
+    <div className={cls} aria-hidden="true">
+      <span className="work-placeholder-letter">{project.name.charAt(0)}</span>
+      <span>{large ? `${project.name} — Screenshot` : project.name}</span>
+    </div>
+  )
+}
+
+export { WorkThumb }
 
 function ClientCard({ project, index }) {
   return (
@@ -10,10 +35,7 @@ function ClientCard({ project, index }) {
       style={{ '--rd': `${(index % 3) * 90}ms` }}
       aria-label={`View ${project.name}`}
     >
-      <div className="work-placeholder" aria-hidden="true">
-        <span className="work-placeholder-letter">{project.name.charAt(0)}</span>
-        <span>{project.name}</span>
-      </div>
+      <WorkThumb project={project} />
       <div className="work-card-body">
         <span className="work-industry">{project.industry}</span>
         <h3>{project.name}</h3>
@@ -45,7 +67,7 @@ function ProductCard({ project, index }) {
           <span className="project-tag" key={tag}>{tag}</span>
         ))}
       </div>
-      {project.link ? (
+      {project.url ? (
         <span className="project-link">View on GitHub &rarr;</span>
       ) : (
         <span className="project-private">Private Repository</span>
@@ -58,11 +80,11 @@ function ProductCard({ project, index }) {
     style: { '--rd': `${(index % 2) * 90}ms` },
   }
 
-  if (project.link) {
+  if (project.url) {
     return (
       <a
         className="project-card card-spot"
-        href={project.link}
+        href={project.url}
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`View ${project.name} on GitHub`}
@@ -76,6 +98,8 @@ function ProductCard({ project, index }) {
 }
 
 export default function Work() {
+  const { clientWork, products } = useProjects()
+
   return (
     <section className="work" id="work">
       <div className="container">
@@ -87,19 +111,27 @@ export default function Work() {
           </p>
         </div>
 
-        <h3 className="work-group-label" data-reveal>Client Websites</h3>
-        <div className="work-grid">
-          {clientWork.map((p, i) => (
-            <ClientCard project={p} index={i} key={p.slug} />
-          ))}
-        </div>
+        {clientWork.length > 0 && (
+          <>
+            <h3 className="work-group-label" data-reveal>Client Websites</h3>
+            <div className="work-grid">
+              {clientWork.map((p, i) => (
+                <ClientCard project={p} index={i} key={p.slug} />
+              ))}
+            </div>
+          </>
+        )}
 
-        <h3 className="work-group-label" data-reveal>Products &amp; Internal Tools</h3>
-        <div className="projects-grid">
-          {products.map((p, i) => (
-            <ProductCard project={p} index={i} key={p.slug} />
-          ))}
-        </div>
+        {products.length > 0 && (
+          <>
+            <h3 className="work-group-label" data-reveal>Products &amp; Internal Tools</h3>
+            <div className="projects-grid">
+              {products.map((p, i) => (
+                <ProductCard project={p} index={i} key={p.slug} />
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </section>
   )
