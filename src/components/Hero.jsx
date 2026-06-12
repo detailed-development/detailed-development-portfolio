@@ -1,3 +1,5 @@
+import LogoSvg from './LogoSvg'
+
 const terminalLines = [
   { cmd: 'whoami' },
   { out: 'small studio. big attention to detail.' },
@@ -51,9 +53,18 @@ export default function Hero() {
             <span className="badge-dot" aria-hidden="true" />
             Software Studio — Phoenix, AZ
           </span>
-          <h1>
-            Detailed <span className="h1-accent">Development</span>{' '}
-            <span className="h1-llc">LLC</span>
+          <h1 aria-label="Detailed Development LLC">
+            {/* The logo mark stands in for the leading D of each word; the
+                aria-label above keeps the heading readable for screen readers. */}
+            <span aria-hidden="true">
+              <span className="h1-word">
+                <LogoSvg className="h1-d" viewBox="24 15 78 92" />etailed
+              </span>{' '}
+              <span className="h1-word h1-accent">
+                <LogoSvg className="h1-d" viewBox="24 15 78 92" accent />evelopment
+              </span>{' '}
+              <span className="h1-llc">LLC</span>
+            </span>
           </h1>
           <p className="hero-tagline">
             We're a small team that builds software the right way — no bloat, no

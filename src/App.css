@@ -40,10 +40,51 @@
   letter-spacing: -0.02em;
 }
 
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
 .header-nav {
   display: flex;
   align-items: center;
   gap: 32px;
+}
+
+.header-menu-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  padding: 10px 9px;
+  background: transparent;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.header-menu-btn span {
+  display: block;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--text);
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+.header-menu-btn.is-open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.header-menu-btn.is-open span:nth-child(2) {
+  opacity: 0;
+}
+
+.header-menu-btn.is-open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
 }
 
 .header-nav a:not(.btn) {
@@ -72,6 +113,9 @@
 /* ── Hero ── */
 .hero {
   min-height: 100vh;
+  /* small viewport units track the real visible area on mobile browsers,
+     so the fixed header can't eat into a "100vh" that includes the URL bar */
+  min-height: 100svh;
   display: flex;
   align-items: center;
   padding-top: 72px;
@@ -183,6 +227,19 @@
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+/* The logo mark stands in for the leading "D" of each hero word. */
+.h1-word {
+  white-space: nowrap;
+}
+
+.h1-d {
+  display: inline-block;
+  height: 0.73em; /* cap height, so it reads as the letter */
+  width: auto;
+  vertical-align: 0;
+  margin-right: 0.015em;
 }
 
 .h1-llc {
@@ -1136,14 +1193,25 @@
 
 /* ── Responsive ── */
 @media (max-width: 900px) {
+  /* Hero clears the fixed header instead of butting up against it,
+     and gets breathing room before the tagline bar below. */
+  .hero {
+    padding-top: 108px;
+    padding-bottom: 48px;
+  }
+
   .hero-grid {
     grid-template-columns: 1fr;
     text-align: center;
-    gap: 48px;
+    gap: 36px;
   }
 
   .hero h1 {
     font-size: 2.6rem;
+  }
+
+  .hero-content {
+    gap: 18px;
   }
 
   .hero-badge {
@@ -1151,6 +1219,8 @@
   }
 
   .hero-tagline {
+    font-size: 1rem;
+    line-height: 1.6;
     margin: 0 auto;
   }
 
@@ -1169,12 +1239,92 @@
     overflow: visible;
   }
 
+  .terminal-body {
+    font-size: 0.75rem;
+    line-height: 1.75;
+  }
+
   .hero-scroll {
     display: none;
   }
 
+  /* Hamburger menu: nav becomes a slide-down panel under the header. */
+  .header-menu-btn {
+    display: inline-flex;
+  }
+
+  .header-right {
+    gap: 12px;
+  }
+
+  .header-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 4px 24px 12px;
+    /* solid: backdrop-filter is unreliable nested inside the header's, and
+       hero text bleeding through the links hurts legibility */
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  }
+
+  .header-nav.is-open {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+  }
+
   .header-nav a:not(.btn) {
+    display: block;
+    padding: 14px 4px;
+    font-size: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-nav a:not(.btn):last-child {
+    border-bottom: none;
+  }
+
+  /* Tighter vertical rhythm: shorter sections, consistent gaps,
+     less total scrolling. */
+  .work,
+  .services,
+  .about,
+  .contact {
+    padding: 72px 0;
+  }
+
+  .work-header,
+  .services-header {
+    margin-bottom: 40px;
+  }
+
+  .work-grid {
+    margin-bottom: 48px;
+  }
+
+  /* Card highlights live on the detail page; trimming them here makes
+     the work section dramatically shorter on small screens. */
+  .work-card .work-bullets {
     display: none;
+  }
+
+  .work-card-body {
+    padding: 22px 18px;
+    gap: 12px;
+  }
+
+  .service-card {
+    padding: 28px 22px;
   }
 
   .services-grid {
@@ -1183,7 +1333,7 @@
 
   .about-grid {
     grid-template-columns: 1fr;
-    gap: 48px;
+    gap: 40px;
   }
 
   .projects-grid {
