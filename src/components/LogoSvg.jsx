@@ -1,6 +1,6 @@
 import { useId } from 'react'
 
-export default function LogoSvg(props) {
+export default function LogoSvg({ accent = false, ...props }) {
   const id = useId()
   const gradientId = `${id}-gradient`
   const shadowId = `${id}-shadow`
@@ -9,8 +9,9 @@ export default function LogoSvg(props) {
     <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" {...props}>
       <defs>
         <radialGradient id={gradientId} cx="50%" cy="40%" r="60%">
-          <stop offset="0%" stopColor="#ffffff" />
-          <stop offset="100%" stopColor="#d4d4d4" />
+          {/* accent matches the .h1-accent text gradient (accent-light → accent-2) */}
+          <stop offset="0%" stopColor={accent ? '#4ade80' : '#ffffff'} />
+          <stop offset="100%" stopColor={accent ? '#2dd4bf' : '#d4d4d4'} />
         </radialGradient>
     
         <filter id={shadowId}>

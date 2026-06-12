@@ -18,7 +18,7 @@ wp-admin (you)                          React site (visitors)
 
 ## One-time setup
 
-1. **Stand up WordPress on a subdomain**, e.g. `cms.detaileddevelopment.com`
+1. **Stand up WordPress on a subdomain**, `admin.detailed-development.com`
    (any host that runs WordPress — same box as nothing else needed).
 2. **Install the plugin:** zip the `dd-portfolio-cms` folder and upload it under
    *Plugins → Add New → Upload Plugin*, then **Activate**.
@@ -27,15 +27,15 @@ wp-admin (you)                          React site (visitors)
 3. **Allow the frontend to read it:** go to *Projects → API Settings* and add your
    site origin(s), one per line, e.g.
    ```
-   https://detaileddevelopment.com
-   https://www.detaileddevelopment.com
+   https://detailed-development.com
+   https://www.detailed-development.com
    http://localhost:5173        ← for local dev
    ```
    (Or enter `*` — the data is public read-only anyway.)
 4. **Point the React app at it:** in the site repo, copy `.env.example` to `.env`
    and set:
    ```
-   VITE_CMS_URL=https://cms.detaileddevelopment.com
+   VITE_CMS_URL=https://admin.detailed-development.com
    ```
    Restart `npm run dev` / rebuild. Done.
 
@@ -68,7 +68,7 @@ wp-admin (you)                          React site (visitors)
       "bullets": ["…", "…"],
       "description": "…",
       "url": "https://gatewaybiblechurch.org",
-      "image": { "url": "https://cms.…/uploads/…jpg", "alt": "…" }
+      "image": { "url": "https://admin.…/uploads/…jpg", "alt": "…" }
     }
   ],
   "products": [
