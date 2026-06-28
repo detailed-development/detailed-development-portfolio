@@ -9,10 +9,44 @@ const ENDPOINT = CMS_URL ? `${CMS_URL}/wp-json/dd/v1/projects` : ''
 // How long to trust an in-memory result before refetching (ms).
 const TTL = 60_000
 
+const NAMED_ENTITIES = {
+  amp: '&',
+  lt: '<',
+  gt: '>',
+  quot: '"',
+  apos: "'",
+  nbsp: ' ',
+  hellip: '…',
+  mdash: '—',
+  ndash: '–',
+  lsquo: '‘',
+  rsquo: '’',
+  ldquo: '“',
+  rdquo: '”',
+}
+
+// WordPress returns titles/content with HTML entities (e.g. "Heidi&#8217;s").
+// We render these as plain text, so decode them here at the data boundary.
+// Pure JS (no DOM) so it works the same in the browser, SSR, and tests.
+function decodeEntities(str) {
+  if (typeof str !== 'string' || !str.includes('&')) return str
+  return str.replace(/&(#x?[0-9a-f]+|[a-z]+);/gi, (match, entity) => {
+    if (entity[0] === '#') {
+      const code =
+        entity[1] === 'x' || entity[1] === 'X'
+          ? parseInt(entity.slice(2), 16)
+          : parseInt(entity.slice(1), 10)
+      return Number.isNaN(code) ? match : String.fromCodePoint(code)
+    }
+    const named = NAMED_ENTITIES[entity.toLowerCase()]
+    return named ?? match
+  })
+}
+
 function normalizeImage(image) {
   if (!image) return null
   if (typeof image === 'string') return image.trim() ? { url: image, alt: '' } : null
-  if (image.url) return { url: image.url, alt: image.alt || '' }
+  if (image.url) return { url: image.url, alt: decodeEntities(image.alt || '') }
   return null
 }
 
@@ -20,12 +54,12 @@ function normalizeImage(image) {
 function normalizeProject(p) {
   return {
     slug: p.slug,
-    name: p.name,
-    industry: p.industry || '',
+    name: decodeEntities(p.name),
+    industry: decodeEntities(p.industry || ''),
     stack: Array.isArray(p.stack) ? p.stack : [],
-    summary: p.summary || '',
-    bullets: Array.isArray(p.bullets) ? p.bullets : [],
-    description: p.description || '',
+    summary: decodeEntities(p.summary || ''),
+    bullets: Array.isArray(p.bullets) ? p.bullets.map(decodeEntities) : [],
+    description: decodeEntities(p.description || ''),
     // Clients call it "url", products call it "link" — accept both, expose "url".
     url: p.url ?? p.link ?? null,
     image: normalizeImage(p.image),

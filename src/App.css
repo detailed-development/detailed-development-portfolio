@@ -1285,6 +1285,9 @@
 
   .header-nav a:not(.btn) {
     display: block;
+    /* Right-aligned so the labels sit under the close button — less
+       eye/finger travel from the menu toggle to the items. */
+    text-align: right;
     padding: 14px 4px;
     font-size: 1rem;
     border-bottom: 1px solid var(--border);
@@ -1336,8 +1339,36 @@
     gap: 40px;
   }
 
+  /* Horizontal swipe carousels: cards slide sideways instead of stacking.
+     Each card is sized so the next one peeks in at the edge — a small hint
+     there's more to swipe. Bleeds to the screen edges past .container's
+     24px padding, then re-pads so the first/last cards align to the edge. */
+  .work-grid,
   .projects-grid {
-    grid-template-columns: 1fr;
+    display: flex;
+    grid-template-columns: none;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-padding-left: 24px;
+    margin-left: -24px;
+    margin-right: -24px;
+    padding: 4px 24px 14px;
+    /* hide the scrollbar; the peeking card communicates scrollability */
+    scrollbar-width: none;
+  }
+
+  .work-grid::-webkit-scrollbar,
+  .projects-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .work-card,
+  .project-card {
+    flex: 0 0 82%;
+    max-width: 340px;
+    scroll-snap-align: start;
   }
 
   .section-title {
@@ -1352,10 +1383,6 @@
     flex-direction: column;
     gap: 16px;
     text-align: center;
-  }
-
-  .work-grid {
-    grid-template-columns: 1fr;
   }
 
   .work-detail-grid {
