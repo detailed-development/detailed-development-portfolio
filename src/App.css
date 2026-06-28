@@ -1260,8 +1260,12 @@
   .header-nav {
     position: absolute;
     top: 100%;
-    left: 0;
+    /* Narrow panel anchored to the right, under the close button —
+       not the full header width. Text inside stays left-aligned. */
     right: 0;
+    width: max-content;
+    min-width: 200px;
+    max-width: 80%;
     flex-direction: column;
     align-items: stretch;
     gap: 0;
@@ -1285,9 +1289,6 @@
 
   .header-nav a:not(.btn) {
     display: block;
-    /* Right-aligned so the labels sit under the close button — less
-       eye/finger travel from the menu toggle to the items. */
-    text-align: right;
     padding: 14px 4px;
     font-size: 1rem;
     border-bottom: 1px solid var(--border);
