@@ -4,7 +4,8 @@ This folder holds **DD Portfolio CMS** — a self-contained WordPress plugin tha
 WordPress install into the backend for the React portfolio site. You edit projects in
 `wp-admin`; the React site reads them at runtime over the REST API.
 
-No ACF or other plugins required.
+No ACF or other plugins required. Version 1.1.0 also adds a private contact inbox
+for the minimal landing page.
 
 ## How it fits together
 
@@ -51,6 +52,50 @@ wp-admin (you)                          React site (visitors)
 - **Reorder:** set the **Order** value under Page Attributes (lower = first).
 - **Client vs Product:** the **Group** dropdown decides which grid it lands in.
   Clients get a detail page; Products are compact cards that link out.
+
+## Contact inbox and notifications
+
+The landing-page popup sends name (optional), email, and message to
+`POST /wp-json/dd/v1/contact`. Requests are saved as private records, visible only
+to users with `manage_options` (normally administrators), under **Projects → Contact
+Requests**. They have no public page or REST read endpoint. Open a request to mark
+it read, and use its email link to reply. Use Trash to remove a request.
+
+The form shows success only after WordPress saves the record. It retains entered
+text on a failure and includes a direct email link. A filled honeypot is discarded;
+the endpoint validates types and lengths, checks the allowed browser origin, and
+limits each remote IP to five attempts per 15 minutes. Only a short-lived salted
+hash of the IP is stored for this limit. Retrying the same request ID returns the
+saved result without creating another record or email.
+
+Email notifications to `anthony@detailed-development.com` are enabled by default.
+The plugin attempts them **after saving**, using WordPress's built-in `wp_mail()`.
+No WP Mail SMTP setup is needed for storing requests. Notification delivery depends
+on the host's mail transport, and even a successful mail call does not confirm
+inbox delivery. The request list records accepted, failed, or disabled notifications.
+Turn notifications off in **Projects → API Settings** to use only the inbox.
+
+### Updating the installed plugin
+
+1. Zip the `dd-portfolio-cms` folder, including its new `includes/contact.php` file.
+2. In WordPress, upload it through **Plugins → Add New → Upload Plugin**, then
+   choose **Replace current with uploaded**. Existing projects are preserved.
+3. In **Projects → API Settings**, include the deployed frontend's exact origin
+   (and `http://127.0.0.1:5173` for this local preview) in **Allowed frontend origins**.
+4. Deploy the React build with `VITE_CMS_URL=https://admin.detailed-development.com`.
+5. Submit one test request from the deployed page, then verify it appears in
+   **Projects → Contact Requests**. Check the inbox even if no email arrives.
+
+To run the backend contract checks without a WordPress install:
+
+```bash
+php wordpress/tests/contact.php
+```
+
+These checks use WordPress stubs to exercise validation, privacy configuration,
+storage failures, spam limits, retry behavior, and mail failures. A live submission
+after installing the plugin is still required to verify the host's database,
+CORS configuration, and optional email transport together.
 
 ## The API shape
 
