@@ -41,12 +41,15 @@ function SpotlightManager() {
   return null
 }
 
-export default function App() {
+function Site() {
+  const { pathname } = useLocation()
+  const isLandingPage = pathname === '/'
+
   return (
-    <BrowserRouter>
+    <>
       <ScrollManager />
       <SpotlightManager />
-      <Header />
+      {!isLandingPage && <Header />}
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -55,7 +58,15 @@ export default function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
-      <Footer />
+      {!isLandingPage && <Footer />}
+    </>
+  )
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Site />
     </BrowserRouter>
   )
 }

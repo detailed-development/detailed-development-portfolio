@@ -2,8 +2,8 @@
 /**
  * Plugin Name:       DD Portfolio CMS
  * Plugin URI:        https://github.com/detailed-development/detailed-development-portfolio
- * Description:        Headless CMS for the Detailed Development portfolio. Adds a "Projects" post type with all the fields the React site needs and exposes them at /wp-json/dd/v1/projects. Use this on a subdomain (e.g. cms.yourdomain.com) and point the React app at it.
- * Version:           1.0.0
+ * Description:        Headless portfolio CMS and private contact inbox for Detailed Development. Serves projects at /wp-json/dd/v1/projects and accepts requests at /wp-json/dd/v1/contact. Use this on a subdomain and point the React app at it.
+ * Version:           1.1.0
  * Author:            Detailed Development LLC
  * License:           GPL-2.0-or-later
  * Text Domain:       dd-portfolio-cms
@@ -19,8 +19,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // No direct access.
 }
 
-define( 'DD_PORTFOLIO_CMS_VERSION', '1.0.0' );
+define( 'DD_PORTFOLIO_CMS_VERSION', '1.1.0' );
 define( 'DD_PORTFOLIO_CMS_REST_NS', 'dd/v1' );
+
+require_once __DIR__ . '/includes/contact.php';
 
 /**
  * The meta fields stored on each project. Key => admin label.
@@ -256,6 +258,11 @@ add_action( 'admin_init', function () {
 		'sanitize_callback' => 'dd_portfolio_sanitize_origins',
 		'default'           => '',
 	) );
+	register_setting( 'dd_portfolio_settings', 'dd_portfolio_contact_notifications', array(
+		'type'              => 'boolean',
+		'sanitize_callback' => 'rest_sanitize_boolean',
+		'default'           => true,
+	) );
 } );
 
 function dd_portfolio_sanitize_origins( $value ) {
@@ -298,8 +305,16 @@ function dd_portfolio_settings_page() {
 					<td>
 						<textarea name="dd_portfolio_origins" id="dd_portfolio_origins" rows="4" class="large-text code" placeholder="https://detaileddevelopment.com&#10;https://www.detaileddevelopment.com"><?php echo esc_textarea( get_option( 'dd_portfolio_origins', '' ) ); ?></textarea>
 						<p class="description">
-							<?php esc_html_e( 'One origin per line (scheme + host, no trailing slash). These are allowed to read the API from a browser. Use * to allow any origin (the data is public anyway). Leave blank to disable cross-origin reads.', 'dd-portfolio-cms' ); ?>
+							<?php esc_html_e( 'One origin per line (scheme + host, no trailing slash). These can read projects and submit contact requests. Prefer explicit site origins. Use * to allow any origin. Leave blank to disable cross-origin access.', 'dd-portfolio-cms' ); ?>
 						</p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"><?php esc_html_e( 'Contact notifications', 'dd-portfolio-cms' ); ?></th>
+					<td>
+						<input type="hidden" name="dd_portfolio_contact_notifications" value="0" />
+						<label><input type="checkbox" name="dd_portfolio_contact_notifications" value="1" <?php checked( get_option( 'dd_portfolio_contact_notifications', true ) ); ?> /> <?php esc_html_e( 'Attempt email notifications to anthony@detailed-development.com', 'dd-portfolio-cms' ); ?></label>
+						<p class="description"><?php esc_html_e( 'Requests are saved under Projects → Contact Requests first. Uses WordPress built-in mail; no SMTP plugin is required. Email delivery depends on your host and is not guaranteed. You can turn notifications off without affecting the inbox.', 'dd-portfolio-cms' ); ?></p>
 					</td>
 				</tr>
 			</table>
@@ -410,10 +425,14 @@ function dd_portfolio_format_project( $post ) {
 add_action( 'rest_api_init', function () {
 	// Run late so we override the core CORS header behavior for our routes.
 	remove_filter( 'rest_pre_serve_request', 'rest_send_cors_headers' );
-	add_filter( 'rest_pre_serve_request', 'dd_portfolio_send_cors_headers', 15 );
+	add_filter( 'rest_pre_serve_request', 'dd_portfolio_send_cors_headers', 15, 3 );
 }, 15 );
 
-function dd_portfolio_send_cors_headers( $served ) {
+function dd_portfolio_send_cors_headers( $served, $result, $request ) {
+	if ( 0 !== strpos( $request->get_route(), '/' . DD_PORTFOLIO_CMS_REST_NS . '/' ) ) {
+		return rest_send_cors_headers( $served );
+	}
+
 	$origin = get_http_origin();
 	if ( ! $origin ) {
 		return $served;
@@ -426,7 +445,7 @@ function dd_portfolio_send_cors_headers( $served ) {
 
 	if ( $ok ) {
 		header( 'Access-Control-Allow-Origin: ' . esc_url_raw( $origin ) );
-		header( 'Access-Control-Allow-Methods: GET, OPTIONS' );
+		header( 'Access-Control-Allow-Methods: GET, POST, OPTIONS' );
 		header( 'Access-Control-Allow-Headers: Content-Type' );
 		header( 'Vary: Origin' );
 	}

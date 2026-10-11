@@ -1,24 +1,30 @@
-import Hero from '../components/Hero'
-import TaglineBar from '../components/TaglineBar'
-import Work from '../components/Work'
-import Services from '../components/Services'
-import Process from '../components/Process'
-import About from '../components/About'
-import Contact from '../components/Contact'
-import useReveal from '../hooks/useReveal'
+import { Link } from 'react-router-dom'
+import LogoSvg from '../components/LogoSvg'
+import ContactPopup from '../components/ContactPopup'
+import './Home.css'
 
 export default function Home() {
-  useReveal()
-
   return (
-    <>
-      <Hero />
-      <TaglineBar />
-      <Work />
-      <Services />
-      <Process />
-      <About />
-      <Contact />
-    </>
+    <section className="holding-page" aria-labelledby="holding-title">
+      <header className="holding-header">
+        <Link to="/" className="holding-brand" aria-label="Detailed Development — home">
+          <LogoSvg aria-hidden="true" />
+          <span>Detailed Development</span>
+        </Link>
+        <ContactPopup />
+      </header>
+
+      <div className="holding-content">
+        <h1 id="holding-title">
+          We are busy<br />
+          <span>building..</span>
+        </h1>
+      </div>
+
+      <footer className="holding-footer">
+        <span>&copy; {new Date().getFullYear()} Detailed Development LLC</span>
+        <Link to="/privacy">Privacy</Link>
+      </footer>
+    </section>
   )
 }
