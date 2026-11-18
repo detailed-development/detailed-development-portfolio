@@ -3,39 +3,6 @@ import Modal from './Modal'
 
 const projects = [
   {
-    title: 'Video Flyer Generator',
-    type: 'Marketing automation',
-    description:
-      'Built and refined a generator that turns event details and a music track into beat-synced motion flyers. Circuit used it for the Juheun and SHADED parties at The Drop PHX.',
-    flyers: [
-      {
-        name: 'Juheun',
-        src: '/projects/circuit-juheun.mp4',
-        poster: '/projects/circuit-juheun.webp',
-        caption: 'Circuit presents Juheun · 8-second preview',
-        href: 'https://circuitaz.com/event/260829_circuit-presents-juheun/',
-      },
-      {
-        name: 'SHADED',
-        src: '/projects/circuit-shaded.mp4',
-        poster: '/projects/circuit-shaded.webp',
-        caption: 'Circuit presents SHADED · 8-second preview',
-        href: 'https://circuitaz.com/event/260926_circuit-presents-shaded/',
-      },
-    ],
-  },
-  {
-    title: 'CIRCUIT Set Mastering',
-    type: 'Audio production automation',
-    description:
-      'Turns raw live recordings into 24-bit WAVs ready to send to artists. The tool queues incoming files, checks loudness and peak levels, and produces a quality report for each master.',
-    preview: {
-      src: '/projects/circuit-set-mastering.webp',
-      alt: 'CIRCUIT Set Mastering showing the recording drop zone and a completed master with loudness and peak measurements',
-      caption: 'Completed master from a sample recording',
-    },
-  },
-  {
     title: 'Circuit AZ',
     type: 'WordPress & Elementor',
     featured: true,
@@ -69,6 +36,39 @@ const projects = [
       src: '/projects/launchagent-viewer.webp',
       alt: 'LaunchAgent Viewer showing system gauges and the status of three background services',
       caption: 'Dashboard shown with sample data',
+    },
+  },
+  {
+    title: 'Video Flyer Generator',
+    type: 'Marketing automation',
+    description:
+      'Built and refined a generator that turns event details and a music track into beat-synced motion flyers. Circuit used it for the Juheun and SHADED parties at The Drop PHX.',
+    flyers: [
+      {
+        name: 'Juheun',
+        src: '/projects/circuit-juheun-full.mp4',
+        poster: '/projects/circuit-juheun.webp',
+        caption: 'Circuit presents Juheun · Full animation',
+        href: 'https://circuitaz.com/event/260829_circuit-presents-juheun/',
+      },
+      {
+        name: 'SHADED',
+        src: '/projects/circuit-shaded-full.mp4',
+        poster: '/projects/circuit-shaded.webp',
+        caption: 'Circuit presents SHADED · Full animation',
+        href: 'https://circuitaz.com/event/260926_circuit-presents-shaded/',
+      },
+    ],
+  },
+  {
+    title: 'iOS Development',
+    type: 'SwiftUI & native iOS',
+    description:
+      'Designed and built a native iPhone app for discovering music and events, organizing favorites, and playing tracks and mixes.',
+    preview: {
+      src: '/projects/ios-music-app.webp',
+      alt: 'Two iPhone screens showing a home feed with sample events and tracks, and a Now Playing screen with waveform controls',
+      caption: 'Home and Now Playing screens',
     },
   },
 ]
@@ -149,7 +149,7 @@ export default function SelectedWork() {
       <div className="selected-work-summary">
         <div>
           <h2 id="selected-work-title">Selected work</h2>
-          <p>WordPress builds, beat-synced video, and tools for running automations.</p>
+          <p>WordPress, native iOS, motion graphics, and automation tools.</p>
         </div>
         <button
           type="button"
