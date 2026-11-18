@@ -3,17 +3,26 @@ import Modal from './Modal'
 
 const projects = [
   {
-    title: 'Circuit AZ',
-    type: 'WordPress & Elementor',
+    title: 'Video Flyer Generator',
+    type: 'Marketing automation',
     description:
-      'Built a website for an Arizona electronic music brand. Fans can browse upcoming and past events, find ticket links, and explore music and media in one place.',
-    href: 'https://circuitaz.com/',
-    action: 'Visit the Circuit AZ website',
-    preview: {
-      src: '/projects/circuit-events.webp',
-      alt: 'Past events on the Circuit AZ site, with three event flyers in a grid',
-      caption: 'Circuit AZ event archive',
-    },
+      'Built and refined a generator that turns event details and a music track into beat-synced motion flyers. Circuit used it for the Juheun and SHADED parties at The Drop PHX.',
+    flyers: [
+      {
+        name: 'Juheun',
+        src: '/projects/circuit-juheun.mp4',
+        poster: '/projects/circuit-juheun.webp',
+        caption: 'Circuit presents Juheun · 8-second preview',
+        href: 'https://circuitaz.com/event/260829_circuit-presents-juheun/',
+      },
+      {
+        name: 'SHADED',
+        src: '/projects/circuit-shaded.mp4',
+        poster: '/projects/circuit-shaded.webp',
+        caption: 'Circuit presents SHADED · 8-second preview',
+        href: 'https://circuitaz.com/event/260926_circuit-presents-shaded/',
+      },
+    ],
   },
   {
     title: 'CIRCUIT Set Mastering',
@@ -27,6 +36,20 @@ const projects = [
     },
   },
   {
+    title: 'Circuit AZ',
+    type: 'WordPress & Elementor',
+    featured: true,
+    description:
+      'Built a website for an Arizona electronic music brand. Fans can browse upcoming and past events, find ticket links, and explore music and media in one place.',
+    href: 'https://circuitaz.com/',
+    action: 'Visit the Circuit AZ website',
+    preview: {
+      src: '/projects/circuit-events.webp',
+      alt: 'Past events on the Circuit AZ site, with three event flyers in a grid',
+      caption: 'Circuit AZ event archive',
+    },
+  },
+  {
     title: '3D Spin Studio',
     type: 'Creative production tool',
     description:
@@ -35,19 +58,6 @@ const projects = [
       src: '/projects/dd-spin.mp4',
       poster: '/projects/dd-spin.webp',
       caption: 'Watch the 5-second DD logo render',
-    },
-  },
-  {
-    title: 'Video Flyer Generator',
-    type: 'Marketing automation',
-    description:
-      'A prototype that combines event details and a music track to produce animated flyers timed to the beat. One template exports vertical, feed, and square videos.',
-    href: 'https://circuitaz.com/event/260626_simulator-feat-risa-taniguchi/',
-    action: 'View the Circuit event',
-    preview: {
-      src: '/projects/circuit-simulator.mp4',
-      poster: '/projects/circuit-simulator.webp',
-      caption: 'Circuit Presents: SIMULATOR · 8-second preview',
     },
   },
   {
@@ -63,12 +73,17 @@ const projects = [
   },
 ]
 
+function pauseOnDetach(video) {
+  return () => video.pause()
+}
+
 function ProjectPreview({ title, preview }) {
   return (
     <figure className="project-preview">
       {preview.poster ? (
         <div className="project-preview-media">
           <video
+            ref={pauseOnDetach}
             controls
             playsInline
             preload="none"
@@ -93,6 +108,35 @@ function ProjectPreview({ title, preview }) {
       )}
       <figcaption>{preview.caption}</figcaption>
     </figure>
+  )
+}
+
+function FlyerPreviews({ title, flyers }) {
+  const [selectedFlyer, setSelectedFlyer] = useState(0)
+  const flyer = flyers[selectedFlyer]
+
+  return (
+    <div className="flyer-previews">
+      <ProjectPreview key={flyer.src} title={title} preview={flyer} />
+      <div className="flyer-preview-actions">
+        <div className="flyer-preview-options" role="group" aria-label="Choose a Circuit flyer">
+          {flyers.map(({ name }, index) => (
+            <button
+              key={name}
+              type="button"
+              className="btn btn-ghost"
+              aria-pressed={selectedFlyer === index}
+              onClick={() => setSelectedFlyer(index)}
+            >
+              {name}
+            </button>
+          ))}
+        </div>
+        <a href={flyer.href} className="project-link">
+          View {flyer.name} event <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
   )
 }
 
@@ -133,9 +177,13 @@ export default function SelectedWork() {
         <h2 id="selected-work-dialog-title">Selected work</h2>
         {isOpen && (
           <div className="selected-work-grid" role="region" aria-label="Project examples" tabIndex={0}>
-            {projects.map(({ title, type, description, href, action, preview }, index) => (
-              <article className={index === 0 ? 'project-card project-card-featured' : 'project-card'} key={title}>
-                <ProjectPreview title={title} preview={preview} />
+            {projects.map(({ title, type, description, href, action, preview, flyers, featured }) => (
+              <article className={featured ? 'project-card project-card-featured' : 'project-card'} key={title}>
+                {flyers ? (
+                  <FlyerPreviews title={title} flyers={flyers} />
+                ) : (
+                  <ProjectPreview title={title} preview={preview} />
+                )}
                 <div className="project-card-content">
                   <div>
                     <span className="work-industry">{type}</span>
