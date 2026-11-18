@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import LogoSvg from '../components/LogoSvg'
 import ContactPopup from '../components/ContactPopup'
 import Services from '../components/Services'
+import SelectedWork from '../components/SelectedWork'
 import './Home.css'
 
 export default function Home() {
@@ -32,6 +33,8 @@ export default function Home() {
       </section>
 
       <Services />
+
+      <SelectedWork />
 
       <section className="home-inquiry container" aria-labelledby="inquiry-title">
         <div className="home-inquiry-panel">
