@@ -16,16 +16,14 @@ const projects = [
     },
   },
   {
-    title: 'WordPress Inquiry Inbox',
-    type: 'Custom WordPress plugin',
+    title: 'CIRCUIT Set Mastering',
+    type: 'Audio production automation',
     description:
-      'The plugin behind this site’s contact form saves inquiries in a private WordPress inbox before confirming receipt. Messages stay available for follow-up if an email notification fails.',
-    href: 'https://github.com/detailed-development/detailed-development-portfolio/tree/main/wordpress',
-    action: 'See the plugin on GitHub',
+      'Turns raw live recordings into 24-bit WAVs ready to send to artists. The tool queues incoming files, checks loudness and peak levels, and produces a quality report for each master.',
     preview: {
-      src: '/projects/inquiry-form.webp',
-      alt: 'Detailed Development’s public inquiry form with name, email, and message fields',
-      caption: 'The public form that feeds the inbox',
+      src: '/projects/circuit-set-mastering.webp',
+      alt: 'CIRCUIT Set Mastering showing the recording drop zone and a completed master with loudness and peak measurements',
+      caption: 'Completed master from a sample recording',
     },
   },
   {
@@ -44,10 +42,12 @@ const projects = [
     type: 'Marketing automation',
     description:
       'A prototype that combines event details and a music track to produce animated flyers timed to the beat. One template exports vertical, feed, and square videos.',
+    href: 'https://circuitaz.com/event/260626_simulator-feat-risa-taniguchi/',
+    action: 'View the Circuit event',
     preview: {
-      src: '/projects/video-flyer.mp4',
-      poster: '/projects/video-flyer.webp',
-      caption: 'Watch an 8-second sample flyer with sound',
+      src: '/projects/circuit-simulator.mp4',
+      poster: '/projects/circuit-simulator.webp',
+      caption: 'Circuit Presents: SIMULATOR · 8-second preview',
     },
   },
   {
