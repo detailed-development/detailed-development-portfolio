@@ -34,8 +34,32 @@
 }
 
 .home-hero {
-  padding: clamp(64px, 8vw, 120px) 24px clamp(56px, 7vw, 96px);
+  padding: clamp(30px, 4vw, 60px) 24px clamp(56px, 7vw, 96px);
   text-align: center;
+}
+
+.glowing-logo {
+  display: block;
+  width: clamp(68px, 7vw, 88px);
+  aspect-ratio: 1;
+  margin: 0 auto clamp(12px, 2vw, 24px);
+  padding: 0;
+  border: 0;
+  border-radius: 16px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.glowing-logo svg {
+  display: block;
+  width: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 0 2px #fff8) drop-shadow(0 0 10px #ddf2ff4d);
+  transition: filter 0.25s ease;
+}
+
+.glowing-logo:is(:hover, :focus-visible) svg {
+  filter: drop-shadow(0 0 3px #fffc) drop-shadow(0 0 14px #ddf2ff80);
 }
 
 .home-hero h1 {
@@ -67,9 +91,43 @@
   scroll-margin-top: 24px;
 }
 
-.selected-work .section-title {
+.selected-work-summary {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding-block: 16px;
+  border-block: 1px solid var(--border-light);
+}
+
+.selected-work-summary h2 {
+  font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1.2;
+}
+
+.selected-work-summary .btn {
+  min-height: 44px;
+  padding-inline: 16px;
+}
+
+.selected-work-summary .btn span {
+  color: var(--accent-light);
+}
+
+.selected-work-dialog {
+  --modal-width: 820px;
+}
+
+.selected-work-dialog h2 {
   margin-bottom: 24px;
-  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  padding-right: 32px;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1.2;
 }
 
 .selected-work-grid {
@@ -80,7 +138,15 @@
 
 .selected-work .project-card {
   max-width: none;
-  padding: clamp(24px, 3vw, 32px);
+  padding: clamp(18px, 3vw, 24px);
+  background: var(--bg);
+  transition: none;
+}
+
+.selected-work .project-card:hover {
+  border-color: var(--border);
+  transform: none;
+  box-shadow: none;
 }
 
 .selected-work .project-card h3 {
@@ -148,6 +214,7 @@
 }
 
 .home-brand:focus-visible,
+.glowing-logo:focus-visible,
 .home-page .btn:focus-visible,
 .selected-work .project-link:focus-visible,
 .home-footer a:focus-visible {

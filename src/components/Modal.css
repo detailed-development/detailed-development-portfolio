@@ -1,0 +1,59 @@
+body:has(.modal[open]) {
+  overflow: hidden;
+}
+
+.modal {
+  width: min(var(--modal-width, 440px), calc(100% - 32px));
+  max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  background: var(--card);
+  color: var(--text);
+  box-shadow: 0 24px 100px rgba(0, 0, 0, 0.5);
+}
+
+.modal::backdrop {
+  background: rgba(4, 7, 5, 0.8);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.modal-panel {
+  position: relative;
+  padding: 32px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  background: var(--card-raised);
+  color: var(--text);
+}
+
+.modal-close:focus-visible {
+  outline: 2px solid var(--accent-light);
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .modal-panel {
+    padding: 28px 24px;
+  }
+}
