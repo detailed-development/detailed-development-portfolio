@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import Modal from './Modal'
 import './ContactPopup.css'
 
 const CONTACT_EMAIL = 'anthony@detailed-development.com'
@@ -85,38 +86,24 @@ export default function ContactPopup({ ref }) {
         Get in touch <span aria-hidden="true">↗</span>
       </button>
 
-      <dialog
+      <Modal
         ref={dialogRef}
         className="contact-dialog"
         aria-labelledby="contact-title"
         aria-describedby="contact-description"
+        closeLabel="Close contact form"
         onClose={closeContact}
-        onClick={(event) => {
-          if (event.target === event.currentTarget) event.currentTarget.close()
-        }}
       >
-        <div className="contact-dialog-panel">
-          <button
-            type="button"
-            className="contact-close"
-            aria-label="Close contact form"
-            onClick={() => dialogRef.current.close()}
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="m6 6 12 12M18 6 6 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
-          </button>
+        <h2 id="contact-title">Say hello.</h2>
+        <p id="contact-description">Tell us what you have in mind.</p>
 
-          <h2 id="contact-title">Say hello.</h2>
-          <p id="contact-description">Tell us what you have in mind.</p>
-
-          {status === 'sent' ? (
-            <div className="contact-confirmation" role="status">
-              <p>Message received.</p>
-              <span>We’ll get back to you at the email you provided.</span>
-              <button type="button" className="btn btn-ghost" onClick={() => setStatus('idle')}>Send another message</button>
-            </div>
-          ) : (
+        {status === 'sent' ? (
+          <div className="contact-confirmation" role="status">
+            <p>Message received.</p>
+            <span>We’ll get back to you at the email you provided.</span>
+            <button type="button" className="btn btn-ghost" onClick={() => setStatus('idle')}>Send another message</button>
+          </div>
+        ) : (
           <form className="contact-form" onSubmit={sendMessage} aria-busy={status === 'sending'} onChange={() => { setError(''); requestIdRef.current = null }}>
             <label htmlFor="contact-name">Name <span>(optional)</span></label>
             <input id="contact-name" name="name" autoComplete="name" maxLength={100} disabled={status === 'sending'} autoFocus />
@@ -147,11 +134,10 @@ export default function ContactPopup({ ref }) {
               We’ll only use your details to reply. <a href="/privacy">Privacy</a>
             </p>
           </form>
-          )}
+        )}
 
-          <a className="contact-direct" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
-        </div>
-      </dialog>
+        <a className="contact-direct" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+      </Modal>
     </>
   )
 }

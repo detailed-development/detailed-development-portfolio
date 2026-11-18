@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import LogoSvg from '../components/LogoSvg'
+import GlowingLogo from '../components/GlowingLogo'
 import ContactPopup from '../components/ContactPopup'
 import Services from '../components/Services'
 import SelectedWork from '../components/SelectedWork'
@@ -20,6 +21,7 @@ export default function Home() {
       </header>
 
       <section className="home-hero" aria-labelledby="home-title">
+        <GlowingLogo />
         <h1 id="home-title">
           Web development &amp; <span>technical support.</span>
         </h1>

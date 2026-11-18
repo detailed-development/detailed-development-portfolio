@@ -1,3 +1,6 @@
+import { useRef } from 'react'
+import Modal from './Modal'
+
 const projects = [
   {
     title: 'Circuit AZ',
@@ -18,23 +21,45 @@ const projects = [
 ]
 
 export default function SelectedWork() {
+  const dialogRef = useRef(null)
+
   return (
     <section className="selected-work container" id="work" aria-labelledby="selected-work-title">
-      <h2 className="section-title" id="selected-work-title">Selected work</h2>
-      <div className="selected-work-grid">
-        {projects.map(({ title, type, description, href, action }) => (
-          <article className="project-card" key={title}>
-            <div>
-              <span className="work-industry">{type}</span>
-              <h3>{title}</h3>
-            </div>
-            <p>{description}</p>
-            <a className="project-link" href={href}>
-              {action} <span aria-hidden="true">↗</span>
-            </a>
-          </article>
-        ))}
+      <div className="selected-work-summary">
+        <h2 id="selected-work-title">Selected work</h2>
+        <button
+          type="button"
+          className="btn btn-ghost"
+          aria-haspopup="dialog"
+          aria-controls="selected-work-dialog"
+          onClick={() => dialogRef.current.showModal()}
+        >
+          View projects <span aria-hidden="true">↗</span>
+        </button>
       </div>
+      <Modal
+        ref={dialogRef}
+        id="selected-work-dialog"
+        className="selected-work-dialog"
+        aria-labelledby="selected-work-dialog-title"
+        closeLabel="Close selected work"
+      >
+        <h2 id="selected-work-dialog-title">Selected work</h2>
+        <div className="selected-work-grid">
+          {projects.map(({ title, type, description, href, action }) => (
+            <article className="project-card" key={title}>
+              <div>
+                <span className="work-industry">{type}</span>
+                <h3>{title}</h3>
+              </div>
+              <p>{description}</p>
+              <a className="project-link" href={href}>
+                {action} <span aria-hidden="true">↗</span>
+              </a>
+            </article>
+          ))}
+        </div>
+      </Modal>
     </section>
   )
 }
