@@ -4,8 +4,9 @@ import './ContactPopup.css'
 
 const CONTACT_EMAIL = 'anthony@detailed-development.com'
 
-export default function ContactPopup() {
-  const dialogRef = useRef(null)
+export default function ContactPopup({ ref }) {
+  const internalDialogRef = useRef(null)
+  const dialogRef = ref ?? internalDialogRef
   const [status, setStatus] = useState('idle')
   const [error, setError] = useState('')
   const requestIdRef = useRef(null)
@@ -17,7 +18,7 @@ export default function ContactPopup() {
     if (hash === '#contact' && !dialogRef.current.open) {
       dialogRef.current.showModal()
     }
-  }, [hash])
+  }, [hash, dialogRef])
 
   function closeContact() {
     if (hash === '#contact') navigate(pathname, { replace: true })

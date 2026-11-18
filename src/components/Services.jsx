@@ -1,65 +1,52 @@
 const services = [
   {
-    number: '01',
-    title: 'Client Websites',
+    title: 'WordPress Rescue',
+    featured: true,
     description:
-      'WordPress, Astra, and Elementor builds for nonprofits, churches, and brands. Organized around what visitors actually come to do — not your org chart.',
+      'Troubleshoot broken layouts, plugin conflicts, failed updates, and checkout issues. Get help building or updating WordPress sites, Elementor pages, and WooCommerce stores.',
   },
   {
-    number: '02',
-    title: 'WordPress Plugin Development',
+    title: 'Email & DNS Rescue',
+    featured: true,
     description:
-      'Need WordPress to do something it doesn\'t? We write clean plugins that play nice with your existing setup. No page-builder spaghetti.',
+      'Set up Google Workspace, fix DNS and mail routing issues, and improve deliverability with SPF, DKIM, and DMARC.',
   },
   {
-    number: '03',
-    title: 'Web App Development',
+    title: 'Plugins, Integrations & Performance',
     description:
-      'The bread and butter. React, Node, full-stack — we build tools people actually want to use. Not templates with your logo slapped on.',
+      'Build custom WordPress plugins, connect your site to the tools you use, and speed up slow pages and stores.',
   },
   {
-    number: '04',
-    title: 'iOS App Development',
+    title: 'Analytics & Conversion Tracking',
     description:
-      'Native Swift and SwiftUI. We care about the little interactions — the scroll feel, the transitions, the stuff users notice but can\'t explain.',
+      'Set up analytics, conversion tracking, and marketing integrations to see which campaigns drive leads, sales, and donations.',
   },
   {
-    number: '05',
-    title: 'Maps, Events & Integrations',
+    title: 'AI Automation & Business Tools',
     description:
-      'Store locators, event calendars, donation flows, media embeds — the connective tissue that makes a site actually do things.',
+      'Use AI to automate repetitive tasks and get custom tools for workflows like intake, reporting, and document processing.',
   },
   {
-    number: '06',
-    title: 'Performance, SEO & Maintenance',
+    title: 'Maintenance & Agency Support',
     description:
-      'Fast pages, clean markup, analytics that tell you something. And when you need a change six months later, we\'re still here.',
+      'Get ongoing help with site updates and fixes, or bring in white-label development and troubleshooting when your agency needs extra capacity.',
   },
 ]
 
 export default function Services() {
   return (
-    <section className="services" id="services">
+    <section className="services" id="services" aria-labelledby="services-title">
       <div className="container">
-        <div className="services-header" data-reveal>
-          <span className="section-eyebrow">What We Do</span>
-          <h2 className="section-title">Services</h2>
-          <p className="section-sub">
-            We keep the scope tight and the quality high. Here's where we tend to do our best work.
-          </p>
-        </div>
+        <h2 className="section-title" id="services-title">Services</h2>
         <div className="services-grid">
-          {services.map((s, i) => (
-            <div
-              className="service-card card-spot"
-              data-reveal
-              style={{ '--rd': `${(i % 3) * 90}ms` }}
-              key={s.number}
+          {services.map(({ title, description, featured }) => (
+            <article
+              className={featured ? 'service-card service-card-featured' : 'service-card'}
+              key={title}
             >
-              <div className="service-number">{s.number}</div>
-              <h3>{s.title}</h3>
-              <p>{s.description}</p>
-            </div>
+              <h3>{title}</h3>
+              <p>{description}</p>
+            </article>
           ))}
         </div>
       </div>
