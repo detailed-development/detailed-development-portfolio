@@ -5,7 +5,7 @@ Studio portfolio site for Detailed Development LLC, a Phoenix, AZ software studi
 ## Stack
 
 - Vite + React 19
-- React Router (home is a minimal holding page; `/work/:slug` and `/privacy` are supplementary routes)
+- React Router (services homepage with supplementary `/work/:slug` and `/privacy` routes)
 - Plain CSS with custom properties — no UI libraries
 
 ## Development
@@ -26,7 +26,7 @@ Static SPA — deploy `dist/` to Vercel, Netlify, or Cloudflare Pages. All three
 ## Structure
 
 - `src/data/work.js` — all portfolio entries (client sites + products). Edit here to add projects.
-- `src/pages/` — Home (holding page), WorkDetail, Privacy
+- `src/pages/` — Home (services and inquiries), WorkDetail, Privacy
 - `src/components/ContactPopup.jsx` — accessible contact dialog. Sends requests to the WordPress plugin's private inbox at `POST /wp-json/dd/v1/contact` using `VITE_CMS_URL`. Requires DD Portfolio CMS 1.1.0 or newer on the CMS host. See `wordpress/README.md` for installation and notifications.
 - `src/components/` — shared components and retained portfolio sections for future use
 
